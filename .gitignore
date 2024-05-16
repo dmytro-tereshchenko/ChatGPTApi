@@ -1,0 +1,7 @@
+# General Visual Studio directories and files to ignore
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+*.sublime-workspace
+**/*.csproj.user

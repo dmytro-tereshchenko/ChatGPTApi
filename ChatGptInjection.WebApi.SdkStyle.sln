@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGptInjection.WebApi", "src\ChatGptInjection.WebApi\ChatGptInjection.WebApi.csproj", "{DF7E246E-5EEE-4C74-8111-FC4EDCB09F94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGptInjection.Abstractions", "src\ChatGptInjection.Abstractions\ChatGptInjection.Abstractions.csproj", "{A908A84A-FF0D-4F38-A3B5-D783D87BCFE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGptInjection.Services", "src\ChatGptInjection.Services\ChatGptInjection.Services.csproj", "{FE5EB569-B160-4854-908F-9DEAEC8AB9AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF7E246E-5EEE-4C74-8111-FC4EDCB09F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF7E246E-5EEE-4C74-8111-FC4EDCB09F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF7E246E-5EEE-4C74-8111-FC4EDCB09F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF7E246E-5EEE-4C74-8111-FC4EDCB09F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A908A84A-FF0D-4F38-A3B5-D783D87BCFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A908A84A-FF0D-4F38-A3B5-D783D87BCFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A908A84A-FF0D-4F38-A3B5-D783D87BCFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A908A84A-FF0D-4F38-A3B5-D783D87BCFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE5EB569-B160-4854-908F-9DEAEC8AB9AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE5EB569-B160-4854-908F-9DEAEC8AB9AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE5EB569-B160-4854-908F-9DEAEC8AB9AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE5EB569-B160-4854-908F-9DEAEC8AB9AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97E7BF8F-146E-4A62-9AB9-287098CA65A8}
+	EndGlobalSection
+EndGlobal
