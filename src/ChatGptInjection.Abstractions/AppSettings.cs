@@ -9,6 +9,8 @@ public class AppSettings
     public string ChatCompletionEndpoint { get; set; }
     public string ChatGpt35ApiKeyName { get; set; }
     public string ChatGpt4ApiKeyName { get; set; }
+    public string AzureConnectionStringName { get; set; }
+    public string ChatGptResponsesBlobContainer { get; set; }
 }
 
 public enum OpenAiModels

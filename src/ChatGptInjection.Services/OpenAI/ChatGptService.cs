@@ -15,14 +15,17 @@ namespace ChatGptInjection.Services.OpenAI;
 public class ChatGptService : IChatGptService
 {
     private readonly HttpClient _httpClient;
+    private readonly IBlobStorageService _blobStorageService;
     private readonly AppSettings _appSettings;
     private readonly ILogger<ChatGptService> _logger;
 
     public ChatGptService(IHttpClientFactory httpClientFactory, 
+        IBlobStorageService blobStorageService,
         IOptions<AppSettings> appSettingsOptions,
         ILogger<ChatGptService> logger)
     {
         _httpClient = httpClientFactory.CreateClient("OpenAI");
+        _blobStorageService = blobStorageService;
         _appSettings = appSettingsOptions.Value;
         _logger = logger;
     }
@@ -64,6 +67,10 @@ public class ChatGptService : IChatGptService
             _logger.LogError("Error while http request to OpenAI API", ex);
             throw;
         }
+
+        chatResponse.ChatId = messageContext.ChatId;
+
+        await _blobStorageService.UploadMessage(chatResponse);
 
         return new ChatResponseDto() { 
             ChatId = messageContext.ChatId,
