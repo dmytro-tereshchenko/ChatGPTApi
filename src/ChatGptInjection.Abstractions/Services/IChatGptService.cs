@@ -1,8 +1,8 @@
-﻿using AppSec.AIPromtInjection.Abstractions.Models;
+﻿using ChatGptInjection.Abstractions.Models;
 
-namespace AppSec.AIPromtInjection.Abstractions.Services;
+namespace ChatGptInjection.Abstractions.Services;
 
 public interface IChatGptService
 {
-    Task<string> SendMessage(ChatRequestDto messageContext);
+    Task<ChatResponseDto> SendMessage(ChatRequestDto messageContext);
 }

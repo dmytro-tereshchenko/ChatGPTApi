@@ -2,7 +2,7 @@
 using Serilog.Core;
 using Serilog.Exceptions;
 
-namespace AppSec.AIPromtInjection.WebApi.Infrastructure.Extensions;
+namespace ChatGptInjection.WebApi.Infrastructure.Extensions;
 
 public static class LoggerExtensions
 {

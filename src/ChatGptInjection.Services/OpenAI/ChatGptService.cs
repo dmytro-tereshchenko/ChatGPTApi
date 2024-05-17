@@ -1,14 +1,16 @@
-﻿using AppSec.AIPromtInjection.Abstractions;
-using AppSec.AIPromtInjection.Abstractions.Models;
-using AppSec.AIPromtInjection.Abstractions.Services;
+﻿using ChatGptInjection.Abstractions;
+using ChatGptInjection.Abstractions.Models;
+using ChatGptInjection.Abstractions.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.ComponentModel;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 
-namespace AppSec.AIPromtInjection.Services.OpenAI;
+namespace ChatGptInjection.Services.OpenAI;
 
 public class ChatGptService : IChatGptService
 {
@@ -25,10 +27,12 @@ public class ChatGptService : IChatGptService
         _logger = logger;
     }
 
-    public async Task<string> SendMessage(ChatRequestDto messageContext)
+    public async Task<ChatResponseDto> SendMessage(ChatRequestDto messageContext)
     {
         OpenAiChatRequestBody requestBody = new() { Model = GetDescription(messageContext.Model) };
         requestBody.Messages.Add(new ChatMessage("user", messageContext.Message));
+
+        var content = BuildContent(requestBody);
 
         string? openAiApiKey = messageContext.Model switch
         {
@@ -42,25 +46,29 @@ public class ChatGptService : IChatGptService
             throw new Exception(errorMessage);
         }
 
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", openAiApiKey);
+
         var url = _appSettings.ChatCompletionEndpoint;
-        var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8);
-        content.Headers.Add("Authorization", $"Bearer {openAiApiKey}");
 
         OpenAiChatResponse chatResponse;
 
         try
         {
             var response = await _httpClient.PostAsync(url, content);
+            if(!response.IsSuccessStatusCode) throw new Exception($"Bad request to OpenAI API, Status Code {response.StatusCode}");
             var stringContent = await response.Content.ReadAsStringAsync();
             chatResponse = JsonConvert.DeserializeObject<OpenAiChatResponse>(stringContent)!;
         }
         catch (Exception ex)
         {
-            _logger.LogError("Error while http request to OpenAi API", ex);
+            _logger.LogError("Error while http request to OpenAI API", ex);
             throw;
         }
 
-        return chatResponse.Choices.First().Message.Content;
+        return new ChatResponseDto() { 
+            ChatId = messageContext.ChatId,
+            Message = chatResponse.Choices.First().Message.Content
+        };
     }
 
     private string GetDescription(OpenAiModels model)
@@ -69,5 +77,18 @@ public class ChatGptService : IChatGptService
         if (fieldInfo is null) return string.Empty;
         var attribute = (DescriptionAttribute?)fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute));
         return attribute?.Description ?? string.Empty;
+    }
+
+    private StringContent BuildContent(OpenAiChatRequestBody requestBody)
+    {
+        var serializerSettings = new JsonSerializerSettings();
+        serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+        var requestBodyString = JsonConvert.SerializeObject(requestBody, serializerSettings);
+        var content = new StringContent(requestBodyString, Encoding.UTF8);
+
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        return content;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace AppSec.AIPromtInjection.Abstractions;
+namespace ChatGptInjection.Abstractions;
 
 #pragma warning disable CS8618
 public class AppSettings

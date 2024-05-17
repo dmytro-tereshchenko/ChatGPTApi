@@ -1,9 +1,8 @@
 ﻿namespace ChatGptInjection.Abstractions.Models;
 
 #pragma warning disable CS8618
-public class ChatRequestDto
+public class ChatResponseDto
 {
-    public string Message { get; set; }
-    public OpenAiModels Model { get; set; }
     public string ChatId { get; set; }
+    public string Message { get; set; }
 }

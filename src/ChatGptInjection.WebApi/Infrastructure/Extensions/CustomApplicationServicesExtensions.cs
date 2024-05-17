@@ -1,9 +1,9 @@
-﻿using AppSec.AIPromtInjection.Abstractions;
-using AppSec.AIPromtInjection.Abstractions.Services;
-using AppSec.AIPromtInjection.Services.OpenAI;
-using AppSec.AIPromtInjection.Services.Validators;
+﻿using ChatGptInjection.Abstractions;
+using ChatGptInjection.Abstractions.Services;
+using ChatGptInjection.Services.OpenAI;
+using ChatGptInjection.Services.Validators;
 
-namespace AppSec.AIPromtInjection.WebApi.Infrastructure.Extensions;
+namespace ChatGptInjection.WebApi.Infrastructure.Extensions;
 
 public static class CustomApplicationServicesExtensions
 {
@@ -12,7 +12,7 @@ public static class CustomApplicationServicesExtensions
         services.AddHttpClient("OpenAI", client =>
         {
             client.BaseAddress = new Uri(appSettings.OpenAiHost);
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
         });
 
         return services

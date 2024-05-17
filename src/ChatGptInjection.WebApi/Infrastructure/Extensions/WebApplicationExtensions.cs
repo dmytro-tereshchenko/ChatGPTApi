@@ -1,8 +1,8 @@
-﻿using AppSec.AIPromtInjection.WebApi.Infrastructure.Constants;
-using AppSec.AIPromtInjection.WebApi.Infrastructure.EndPoints;
-using AppSec.AIPromtInjection.WebApi.Infrastructure.Middlewares;
+﻿using ChatGptInjection.WebApi.Infrastructure.Constants;
+using ChatGptInjection.WebApi.Infrastructure.EndPoints;
+using ChatGptInjection.WebApi.Infrastructure.Middlewares;
 
-namespace AppSec.AIPromtInjection.WebApi.Infrastructure.Extensions;
+namespace ChatGptInjection.WebApi.Infrastructure.Extensions;
 
 public static class WebApplicationExtensions
 {

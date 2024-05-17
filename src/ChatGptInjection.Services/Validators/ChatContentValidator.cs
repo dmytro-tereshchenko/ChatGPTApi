@@ -1,6 +1,6 @@
-﻿using AppSec.AIPromtInjection.Abstractions.Services;
+﻿using ChatGptInjection.Abstractions.Services;
 
-namespace AppSec.AIPromtInjection.Services.Validators;
+namespace ChatGptInjection.Services.Validators;
 
 public class ChatContentValidator : IChatContentValidator
 {

@@ -1,4 +1,4 @@
-﻿namespace AppSec.AIPromtInjection.Abstractions.Services;
+﻿namespace ChatGptInjection.Abstractions.Services;
 
 public interface IChatContentValidator
 {

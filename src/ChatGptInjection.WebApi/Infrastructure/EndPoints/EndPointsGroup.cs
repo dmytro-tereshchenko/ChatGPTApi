@@ -1,11 +1,11 @@
-﻿using AppSec.AIPromtInjection.Abstractions.Models;
-using AppSec.AIPromtInjection.Abstractions.Services;
+﻿using ChatGptInjection.Abstractions.Models;
+using ChatGptInjection.Abstractions.Services;
 
-namespace AppSec.AIPromtInjection.WebApi.Infrastructure.EndPoints;
+namespace ChatGptInjection.WebApi.Infrastructure.EndPoints;
 
 public static class EndPointsGroup
 {
-    public static IResult SendMessage(ChatRequestDto bodyRequest, IChatGptService chatGptService)
+    public static async Task<IResult> SendMessage(ChatRequestDto bodyRequest, IChatGptService chatGptService)
     {
         try
         {
@@ -15,7 +15,7 @@ public static class EndPointsGroup
             if (string.IsNullOrEmpty(bodyRequest.ChatId))
                 bodyRequest.ChatId = Guid.NewGuid().ToString();
 
-            var chatResponse = chatGptService.SendMessage(bodyRequest);
+            var chatResponse = await chatGptService.SendMessage(bodyRequest);
 
             return TypedResults.Ok(chatResponse);
         }

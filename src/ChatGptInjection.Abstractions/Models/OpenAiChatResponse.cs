@@ -1,4 +1,4 @@
-﻿namespace AppSec.AIPromtInjection.Abstractions.Models;
+﻿namespace ChatGptInjection.Abstractions.Models;
 
 #pragma warning disable CS8618
 public class OpenAiChatResponse

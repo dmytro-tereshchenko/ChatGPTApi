@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace AppSec.AIPromtInjection.WebApi.Infrastructure.Extensions;
+namespace ChatGptInjection.WebApi.Infrastructure.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {

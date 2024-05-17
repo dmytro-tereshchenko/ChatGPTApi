@@ -1,4 +1,4 @@
-﻿namespace AppSec.AIPromtInjection.WebApi.Infrastructure.Constants;
+﻿namespace ChatGptInjection.WebApi.Infrastructure.Constants;
 
 public class Routing
 {

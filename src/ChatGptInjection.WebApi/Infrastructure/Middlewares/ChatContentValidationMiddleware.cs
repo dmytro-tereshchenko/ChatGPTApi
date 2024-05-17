@@ -1,10 +1,10 @@
-﻿using AppSec.AIPromtInjection.Abstractions.Models;
-using AppSec.AIPromtInjection.Abstractions.Services;
-using AppSec.AIPromtInjection.WebApi.Infrastructure.Constants;
-using AppSec.AIPromtInjection.WebApi.Infrastructure.Extensions;
+﻿using ChatGptInjection.Abstractions.Models;
+using ChatGptInjection.Abstractions.Services;
+using ChatGptInjection.WebApi.Infrastructure.Constants;
+using ChatGptInjection.WebApi.Infrastructure.Extensions;
 using Newtonsoft.Json;
 
-namespace AppSec.AIPromtInjection.WebApi.Infrastructure.Middlewares;
+namespace ChatGptInjection.WebApi.Infrastructure.Middlewares;
 
 public class ChatContentValidationMiddleware
 {

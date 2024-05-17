@@ -1,5 +1,5 @@
-using AppSec.AIPromtInjection.Abstractions;
-using AppSec.AIPromtInjection.WebApi.Infrastructure.Extensions;
+using ChatGptInjection.Abstractions;
+using ChatGptInjection.WebApi.Infrastructure.Extensions;
 using Serilog;
 
 var configuration = BuildConfiguration();
@@ -12,7 +12,6 @@ try
     builder.ConfigureHostDefaultOptions();
     var services = builder.Services;
 
-    //services.AddSystemWebAdapters();
     services.Configure<AppSettings>(configuration);
     var appSettings = builder.Configuration.Get<AppSettings>();
     services.AddCustomApplicationServices(appSettings!);
