@@ -16,38 +16,34 @@ public class ChatGptService : IChatGptService
 {
     private readonly HttpClient _httpClient;
     private readonly IBlobStorageService _blobStorageService;
+    private readonly IConfigService _configService;
     private readonly AppSettings _appSettings;
     private readonly ILogger<ChatGptService> _logger;
 
     public ChatGptService(IHttpClientFactory httpClientFactory, 
         IBlobStorageService blobStorageService,
+        IConfigService configService,
         IOptions<AppSettings> appSettingsOptions,
         ILogger<ChatGptService> logger)
     {
         _httpClient = httpClientFactory.CreateClient("OpenAI");
         _blobStorageService = blobStorageService;
+        _configService = configService;
         _appSettings = appSettingsOptions.Value;
         _logger = logger;
     }
 
-    public async Task<ChatResponseDto> SendMessage(ChatRequestDto messageContext)
+    public async Task<ChatMessageResponse> SendMessage(ChatMessageRequest messageContext)
     {
+        if (string.IsNullOrEmpty(messageContext.ChatId))
+            messageContext.ChatId = Guid.NewGuid().ToString();
+
         OpenAiChatRequestBody requestBody = new() { Model = GetDescription(messageContext.Model) };
         requestBody.Messages.Add(new ChatMessage("user", messageContext.Message));
 
         var content = BuildContent(requestBody);
 
-        string? openAiApiKey = messageContext.Model switch
-        {
-            OpenAiModels.Gpt4Turbo => Environment.GetEnvironmentVariable(_appSettings.ChatGpt4ApiKeyName),
-            OpenAiModels.Gpt35Turbo or _ => Environment.GetEnvironmentVariable(_appSettings.ChatGpt35ApiKeyName)
-        };
-
-        if (openAiApiKey is null) {
-            var errorMessage = $"OpenAI Api key is not found for {requestBody.Model}";
-            _logger.LogError(errorMessage);
-            throw new Exception(errorMessage);
-        }
+        var openAiApiKey = _configService.GetOpenAiApiKey(messageContext.Model);
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", openAiApiKey);
 
@@ -64,7 +60,7 @@ public class ChatGptService : IChatGptService
         }
         catch (Exception ex)
         {
-            _logger.LogError("Error while http request to OpenAI API", ex);
+            _logger.LogError("Error while http request to OpenAI API: {@ex}", ex);
             throw;
         }
 
@@ -72,7 +68,7 @@ public class ChatGptService : IChatGptService
 
         await _blobStorageService.UploadMessage(chatResponse);
 
-        return new ChatResponseDto() { 
+        return new ChatMessageResponse() { 
             ChatId = messageContext.ChatId,
             Message = chatResponse.Choices.First().Message.Content
         };

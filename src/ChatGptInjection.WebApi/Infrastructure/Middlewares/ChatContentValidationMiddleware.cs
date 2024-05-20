@@ -25,12 +25,12 @@ public class ChatContentValidationMiddleware
         if (useChatConversationEndpoint)
         {
             var requestMessageContent = await GetRequestMessageContent(context.Request);
-            var chatRequest = JsonConvert.DeserializeObject<ChatRequestDto>(requestMessageContent);
+            var chatRequest = JsonConvert.DeserializeObject<ChatMessageRequest>(requestMessageContent);
             var requestValidation = chatRequest is not null ? validator.ChatRequestValidate(chatRequest.Message!) : false;
             if (!requestValidation)
             {
                 context.Response.StatusCode = 400;
-                _logger.LogWarning("Invalid request message to chat GPT", chatRequest);
+                _logger.LogWarning("Invalid request message to chat GPT: {@chatRequest}", chatRequest);
                 return;
             }
         }

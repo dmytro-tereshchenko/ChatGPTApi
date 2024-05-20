@@ -1,6 +1,7 @@
 ﻿using ChatGptInjection.Abstractions;
 using ChatGptInjection.Abstractions.Services;
 using ChatGptInjection.Services.Azure;
+using ChatGptInjection.Services.Config;
 using ChatGptInjection.Services.OpenAI;
 using ChatGptInjection.Services.Validators;
 
@@ -19,6 +20,7 @@ public static class CustomApplicationServicesExtensions
         return services
             .AddTransient<IChatContentValidator, ChatContentValidator>()
             .AddTransient<IChatGptService, ChatGptService>()
-            .AddTransient<IBlobStorageService, BlobStorageService>();
+            .AddTransient<IBlobStorageService, BlobStorageService>()
+            .AddTransient<IConfigService, ConfigService>();
     }
 }

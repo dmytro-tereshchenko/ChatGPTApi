@@ -4,5 +4,5 @@ namespace ChatGptInjection.Abstractions.Services;
 
 public interface IChatGptService
 {
-    Task<ChatResponseDto> SendMessage(ChatRequestDto messageContext);
+    Task<ChatMessageResponse> SendMessage(ChatMessageRequest messageContext);
 }
