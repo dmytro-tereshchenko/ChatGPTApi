@@ -15,7 +15,8 @@ public static class WebApplicationExtensions
     {
         app.MapGet("/", () => "Test AI promt injection WebApi");
         app.MapPost(Routing.SEND_MESSAGE, EndPointsGroup.SendMessage);
-        app.MapGet(Routing.GET_HISTORY, EndPointsGroup.GetHistory);
-        app.MapGet($"{Routing.GET_HISTORY}/{{chatId}}", EndPointsGroup.GetHistory);
+        app.MapGet(Routing.GET_CHAT_HISTORY, EndPointsGroup.GetChatHistory);
+        app.MapGet(Routing.GET_MESSAGE_HISTORY, EndPointsGroup.GetMessageHistory);
+        app.MapGet($"{Routing.GET_MESSAGE_HISTORY}/{{chatId}}", EndPointsGroup.GetMessageHistory);
     }
 }

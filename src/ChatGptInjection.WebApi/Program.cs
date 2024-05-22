@@ -13,8 +13,7 @@ try
     var services = builder.Services;
 
     services.Configure<AppSettings>(configuration);
-    var appSettings = builder.Configuration.Get<AppSettings>();
-    services.AddCustomApplicationServices(appSettings!);
+    services.AddCustomApplicationServices();
 
     var app = builder.Build();
 

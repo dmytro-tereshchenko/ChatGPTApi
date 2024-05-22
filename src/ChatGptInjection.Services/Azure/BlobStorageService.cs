@@ -12,10 +12,9 @@ public class BlobStorageService : IBlobStorageService
 {
     private readonly BlobContainerClient _containerClient;
 
-    public BlobStorageService(IOptions<AppSettings> appSettingsOptions, 
-        IConfigService configService)
+    public BlobStorageService(IOptions<AppSettings> appSettingsOptions)
     {
-        var azureConnectionString = configService.GetAzureConnectionString();
+        var azureConnectionString = appSettingsOptions.Value.AzureConnectionString;
         _containerClient = new BlobContainerClient(azureConnectionString, appSettingsOptions.Value.ChatGptResponsesBlobContainer);
     }
 

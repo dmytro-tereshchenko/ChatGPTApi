@@ -1,23 +1,12 @@
-﻿using System.ComponentModel;
+﻿namespace ChatGptInjection.Abstractions;
 
-namespace ChatGptInjection.Abstractions;
-
-#pragma warning disable CS8618
 public class AppSettings
 {
-    public string OpenAiHost { get; set; }
-    public string ChatCompletionEndpoint { get; set; }
-    public string ChatGpt35ApiKeyName { get; set; }
-    public string ChatGpt4ApiKeyName { get; set; }
-    public string AzureConnectionStringName { get; set; }
-    public string ChatGptResponsesBlobContainer { get; set; }
+    public string AzureConnectionString { get; set; } = string.Empty;
+    public string ChatGptResponsesBlobContainer { get; set; } = string.Empty;
+    public string ChatGptStorageHistoryContainer { get; set; } = string.Empty;
+    public int MaxTokensOnRequest { get; set; }
+    public Dictionary<string, ChatGptModel> ChatGptModels { get; set; } = new Dictionary<string, ChatGptModel>();
 }
 
-public enum OpenAiModels
-{
-    [Description("gpt-3.5-turbo")]
-    Gpt35Turbo,
-
-    [Description("gpt-4-turbo")]
-    Gpt4Turbo
-}
+public record ChatGptModel(string Endpoint, string Model, string ApiKey, string Encoding);

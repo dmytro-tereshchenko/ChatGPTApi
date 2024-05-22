@@ -8,17 +8,17 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["AppSec.AIPromtInjection.WebApi.csproj", "."]
-RUN dotnet restore "./AppSec.AIPromtInjection.WebApi.csproj"
+COPY ["ChatGptInjection.WebApi.csproj", "."]
+RUN dotnet restore "./ChatGptInjection.WebApi.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "./AppSec.AIPromtInjection.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./ChatGptInjection.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./AppSec.AIPromtInjection.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./ChatGptInjection.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AppSec.AIPromtInjection.WebApi.dll"]
+ENTRYPOINT ["dotnet", "ChatGptInjection.WebApi.dll"]

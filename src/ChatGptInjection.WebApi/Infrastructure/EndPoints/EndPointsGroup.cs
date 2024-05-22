@@ -5,14 +5,14 @@ namespace ChatGptInjection.WebApi.Infrastructure.EndPoints;
 
 public static class EndPointsGroup
 {
-    public static async Task<IResult> SendMessage(ChatMessageRequest bodyRequest, IChatGptService chatGptService)
+    public static async Task<IResult> SendMessage(ChatMessageRequest bodyRequest, IChatGptCommandHandler chatGptHandler)
     {
         try
         {
             if (string.IsNullOrEmpty(bodyRequest.Message))
                 return TypedResults.BadRequest();
 
-            var chatResponse = await chatGptService.SendMessage(bodyRequest);
+            var chatResponse = await chatGptHandler.ChatComunicationHandleAsync(bodyRequest);
 
             return TypedResults.Ok(chatResponse);
         }
@@ -22,16 +22,28 @@ public static class EndPointsGroup
         }
     }
 
-    public static IResult GetHistory(string chatId = "")
+    public static IResult GetChatHistory(IHistoryHandler historyHandler)
     {
         try
         {
-            if (!string.IsNullOrEmpty(chatId))
-            {
-                return TypedResults.Ok($"history for one chatId {chatId}");
-            }
+            var chatHistory = historyHandler.ChatHistoryHandle();
+            return TypedResults.Ok(chatHistory);
+        }
+        catch (Exception ex)
+        {
+            return Results.Json(new { error = ex.Message }, statusCode: 500);
+        }
+    }
 
-            return TypedResults.Ok("all history");
+    public static IResult GetMessageHistory(string chatId, IHistoryHandler historyHandler, bool fullResponse = false)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(chatId))
+                return TypedResults.BadRequest();
+
+            var messageHistory = historyHandler.MessageHistoryHandle(chatId, fullResponse);
+            return TypedResults.Ok(messageHistory);
         }
         catch (Exception ex)
         {

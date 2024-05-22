@@ -4,5 +4,5 @@ namespace ChatGptInjection.Abstractions.Services;
 
 public interface IChatGptService
 {
-    Task<ChatMessageResponse> SendMessage(ChatMessageRequest messageContext);
+    Task<OpenAiChatResponse> SendMessageAsync(string model, List<ChatMessage> messages);
 }

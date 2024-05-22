@@ -1,11 +1,11 @@
 ﻿namespace ChatGptInjection.Abstractions.Models;
 
-public class OpenAiChatRequestBody
+public class OpenAiChatRequest
 {
     public string Model { get; set; }
     public List<ChatMessage> Messages { get; set; }
 
-    public OpenAiChatRequestBody()
+    public OpenAiChatRequest()
     {
         Model = string.Empty;
         Messages = new List<ChatMessage>();

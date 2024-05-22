@@ -26,15 +26,45 @@ public class ChatContentValidationMiddleware
         {
             var requestMessageContent = await GetRequestMessageContent(context.Request);
             var chatRequest = JsonConvert.DeserializeObject<ChatMessageRequest>(requestMessageContent);
-            var requestValidation = chatRequest is not null ? validator.ChatRequestValidate(chatRequest.Message!) : false;
+            var requestValidation = chatRequest is not null ? validator.ChatRequestValidate(chatRequest.Message) : false;
             if (!requestValidation)
             {
                 context.Response.StatusCode = 400;
                 _logger.LogWarning("Invalid request message to chat GPT: {@chatRequest}", chatRequest);
                 return;
             }
+
+            Stream originalBody = context.Response.Body;
+
+            try
+            {
+                using (var memStream = new MemoryStream())
+                {
+                    context.Response.Body = memStream;
+
+                    await _next(context);
+
+                    var responseMessageContent = GetResponseMessageContent(memStream);
+                    var chatResponse = JsonConvert.DeserializeObject<ChatMessageResponse>(responseMessageContent);
+                    var responseValidation = chatResponse is not null ? validator.ChatResponseValidate(chatResponse.Message) : false;
+                    if (!responseValidation)
+                    {
+                        context.Response.StatusCode = 400;
+                        _logger.LogWarning("Invalid request message to chat GPT: {@chatRequest}", chatResponse);
+                        return;
+                    }
+
+                    await memStream.CopyToAsync(originalBody);
+                }
+
+            }
+            finally
+            {
+                context.Response.Body = originalBody;
+            }
         }
-        await _next(context);
+        else
+            await _next(context);
     }
 
     private async Task<string> GetRequestMessageContent(HttpRequest request)
@@ -51,5 +81,13 @@ public class ChatContentValidationMiddleware
         }
 
         return "";
+    }
+
+    private string GetResponseMessageContent(MemoryStream stream)
+    {
+        stream.Position = 0;
+        var responseBody = new StreamReader(stream).ReadToEnd();
+        stream.Position = 0;
+        return responseBody;
     }
 }
