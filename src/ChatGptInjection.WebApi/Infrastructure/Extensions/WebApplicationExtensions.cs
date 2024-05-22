@@ -14,6 +14,7 @@ public static class WebApplicationExtensions
     public static void RegisterRoutes(this WebApplication app)
     {
         app.MapGet("/", () => "Test AI promt injection WebApi");
+        app.MapGet("/error", () => "Something went wrong.");
         app.MapPost(Routing.SEND_MESSAGE, EndPointsGroup.SendMessage);
         app.MapGet(Routing.GET_CHAT_HISTORY, EndPointsGroup.GetChatHistory);
         app.MapGet(Routing.GET_MESSAGE_HISTORY, EndPointsGroup.GetMessageHistory);

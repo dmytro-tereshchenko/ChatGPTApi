@@ -5,9 +5,14 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGptInjection.WebApi", "src\ChatGptInjection.WebApi\ChatGptInjection.WebApi.csproj", "{DF7E246E-5EEE-4C74-8111-FC4EDCB09F94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGptInjection.Abstractions", "src\ChatGptInjection.Abstractions\ChatGptInjection.Abstractions.csproj", "{A908A84A-FF0D-4F38-A3B5-D783D87BCFE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppSec.AIPromtInjection.Abstractions", "src\AppSec.AIPromtInjection.Abstractions\AppSec.AIPromtInjection.Abstractions.csproj", "{A908A84A-FF0D-4F38-A3B5-D783D87BCFE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGptInjection.Services", "src\ChatGptInjection.Services\ChatGptInjection.Services.csproj", "{FE5EB569-B160-4854-908F-9DEAEC8AB9AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppSec.AIPromtInjection.Services", "src\AppSec.AIPromtInjection.Services\AppSec.AIPromtInjection.Services.csproj", "{FE5EB569-B160-4854-908F-9DEAEC8AB9AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34C57CC3-C634-4902-948E-B5307EBFAD71}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

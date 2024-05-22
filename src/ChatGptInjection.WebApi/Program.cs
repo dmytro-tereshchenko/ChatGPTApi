@@ -23,7 +23,7 @@ try
     }
     else
     {
-        app.UseExceptionHandler();
+        app.UseExceptionHandler("/error");
     }
 
     app.UseSerilogRequestLogging(options => { options.IncludeQueryInRequestPath = true; });
